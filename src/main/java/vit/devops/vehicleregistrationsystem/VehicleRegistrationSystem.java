@@ -56,6 +56,9 @@ public class VehicleRegistrationSystem {
                     vehicle_register.Register();
                     
                     VehicleRegistration.getDetails(owner);
+                    
+                    VehiclePermit permit = new VehiclePermit(owner);
+                    permit.issuePermit();
                     break;
 
                 case 0:
