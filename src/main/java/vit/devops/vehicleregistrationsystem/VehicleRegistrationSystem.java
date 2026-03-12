@@ -13,7 +13,7 @@ public class VehicleRegistrationSystem {
 
         while(true){
 
-            System.out.println("Choose Option: \n1: SignUp \n2: Login \n0: Exit");
+            System.out.println("Choose Option: \n1: SignUp \n2: Login \n3: Vehicle registration \n0: Exit");
             int x = sc.nextInt();
             sc.nextLine(); // clear buffer
 
@@ -43,6 +43,19 @@ public class VehicleRegistrationSystem {
                     String loginPassword = sc.nextLine();
 
                     SignupLogin.Login(loginEmail, loginPassword);
+                    break;
+                case 3:
+                    System.out.println("--- Vehicle Registration ---");
+                    System.out.print("Enter Vehicle Details: ");
+                    String details = sc.nextLine();
+
+                    System.out.print("Enter Owner Name: ");
+                    String owner = sc.nextLine();
+
+                    VehicleRegistration vehicle_register  = new VehicleRegistration(details, owner);
+                    vehicle_register.Register();
+                    
+                    VehicleRegistration.getDetails(owner);
                     break;
 
                 case 0:
