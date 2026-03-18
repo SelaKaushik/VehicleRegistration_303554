@@ -8,14 +8,24 @@ package vit.devops.vehicleregistrationsystem;
  *
  * @author saiki
  */
+
 public class Examination {
+
     private int marks;
 
-    public Examination(int marks) {
+    public Examination(int marks){
         this.marks = marks;
     }
 
-    public boolean isEligible() {
-        return marks >= 40;
+    public boolean isEligible(){
+
+        if(marks >= 40){
+            System.out.println("Candidate Passed Driving Test");
+            return true;
+        }
+        else{
+            System.out.println("Candidate Failed Driving Test");
+            return false;
+        }
     }
 }

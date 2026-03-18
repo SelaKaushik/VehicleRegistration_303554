@@ -8,18 +8,20 @@ package vit.devops.vehicleregistrationsystem;
  *
  * @author saiki
  */
+
 public class VehicleLicensing {
 
-    public void provideLicense(String name, int marks) {
+    public void provideLicense(String owner, int marks){
 
         Examination exam = new Examination(marks);
         Finance finance = new Finance();
 
-        if (exam.isEligible()) {
+        if(exam.isEligible()){
             finance.collectFee(500);
-            System.out.println("License issued to " + name);
-        } else {
-            System.out.println("License denied to " + name);
+            System.out.println("Driving License Issued to " + owner);
+        }
+        else{
+            System.out.println("Driving License Not Issued to " + owner);
         }
     }
 }

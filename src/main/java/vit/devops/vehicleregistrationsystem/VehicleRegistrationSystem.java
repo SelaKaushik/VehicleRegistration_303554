@@ -59,6 +59,12 @@ public class VehicleRegistrationSystem {
                     
                     VehiclePermit permit = new VehiclePermit(owner);
                     permit.issuePermit();
+                    System.out.print("Enter Driving Test Marks: ");
+                    int marks = sc.nextInt();
+                    sc.nextLine();
+
+                    VehicleLicensing vl = new VehicleLicensing();
+                    vl.provideLicense(owner, marks);
                     break;
 
                 case 0:

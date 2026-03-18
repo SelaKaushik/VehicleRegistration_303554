@@ -8,15 +8,17 @@ package vit.devops.vehicleregistrationsystem;
  *
  * @author saiki
  */
-public class Finance {
-    private double totalAmount = 0;
 
-    public void collectFee(double amount) {
+public class Finance {
+
+    private static double totalAmount = 0;
+
+    public void collectFee(double amount){
         totalAmount += amount;
-        System.out.println("Fee collected: " + amount);
+        System.out.println("Fee Collected: " + amount);
     }
 
-    public double getTotalAmount() {
-        return totalAmount;
+    public void showTotal(){
+        System.out.println("Total Revenue: " + totalAmount);
     }
 }
