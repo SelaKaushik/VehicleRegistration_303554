@@ -11,19 +11,20 @@ package vit.devops.vehicleregistrationsystem;
 
 public class Examination {
 
+    private int age;
     private int marks;
 
-    public Examination(int marks){
+    public Examination(int marks, int age) {
+        this.age = age;
         this.marks = marks;
     }
 
-    public boolean isEligible(){
+    public boolean isEligible() {
 
-        if(marks >= 40){
+        if (age >= 18 && marks >= 40) {
             System.out.println("Candidate Passed Driving Test");
             return true;
-        }
-        else{
+        } else {
             System.out.println("Candidate Failed Driving Test");
             return false;
         }

@@ -11,16 +11,15 @@ package vit.devops.vehicleregistrationsystem;
 
 public class VehicleLicensing {
 
-    public void provideLicense(String owner, int marks){
+    public void provideLicense(String owner, int marks, int age) {
 
-        Examination exam = new Examination(marks);
+        Examination exam = new Examination(marks, age);
         Finance finance = new Finance();
 
-        if(exam.isEligible()){
+        if (exam.isEligible()) {
             finance.collectFee(500);
             System.out.println("Driving License Issued to " + owner);
-        }
-        else{
+        } else {
             System.out.println("Driving License Not Issued to " + owner);
         }
     }
