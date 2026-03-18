@@ -4,46 +4,30 @@
  */
 package vit.devops.vehicleregistrationsystem;
 
-import java.util.*;
+import java.util.HashMap;
+
 public class VehicleRegistration {
-    String vehicle_details;
-    String owner;
-    
-    public static HashMap<String, String> vehicle_owners = new HashMap<>();
-    
-    public VehicleRegistration(String vehicle_details, String owner){
-        this.vehicle_details = vehicle_details;
+
+    private String details;
+    private String owner;
+
+    private static HashMap<String, String> vehicleDB = new HashMap<>();
+
+    public VehicleRegistration(String details, String owner) {
+        this.details = details;
         this.owner = owner;
     }
-    
-    //Register Vehicle
-    public void Register(){
-        vehicle_owners.put(owner, vehicle_details);
-        System.out.println(owner + "Registered with " + vehicle_details + " Successfully");
-    }
-    
-    // Get vehicle details
-    public static void getDetails(String owner){
 
-        if(vehicle_owners.containsKey(owner)){
-            System.out.println("Owner: " + owner);
-            System.out.println("Vehicle: " + vehicle_owners.get(owner));
-        }
-        else{
-            System.out.println("No vehicle found for this owner");
-        }
+    public void register() {
+        vehicleDB.put(owner, details);
+        System.out.println("Vehicle Registered Successfully");
     }
 
-    // Verify vehicle
-    public static boolean verifyDetails(String owner){
-
-        if(vehicle_owners.containsKey(owner)){
-            System.out.println("Vehicle Verified");
-            return true;
-        }
-        else{
-            System.out.println("Vehicle Not Registered");
-            return false;
+    public static void getDetails(String owner) {
+        if (vehicleDB.containsKey(owner)) {
+            System.out.println("Vehicle Details: " + vehicleDB.get(owner));
+        } else {
+            System.out.println("No Vehicle Found for " + owner);
         }
     }
 }

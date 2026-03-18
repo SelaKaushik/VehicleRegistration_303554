@@ -9,19 +9,14 @@ package vit.devops.vehicleregistrationsystem;
  * @author SelaKaushik
  */
 public class VehiclePermit {
-    String owner;
 
-    public VehiclePermit(String owner){
+    private String owner;
+
+    public VehiclePermit(String owner) {
         this.owner = owner;
     }
 
-    public void issuePermit(){
-
-        if(VehicleRegistration.verifyDetails(owner)){
-            System.out.println("Permit Issued for " + owner);
-        }
-        else{
-            System.out.println("Permit Cannot Be Issued");
-        }
+    public void issuePermit() {
+        System.out.println("Permit Issued to " + owner);
     }
 }
