@@ -2,39 +2,15 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'   // Name configured in Jenkins
+        maven 'Maven3'
         jdk 'JDK25'
     }
 
     stages {
 
-        stage('Checkout Code') {
+        stage('Build') {
             steps {
-                git 'https://github.com/SelaKaushik/VehicleRegistration_303554.git'
-            }
-        }
-
-        stage('Clean') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-
-        stage('Compile') {
-            steps {
-                sh 'mvn compile'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
-        stage('Package') {
-            steps {
-                sh 'mvn package'
+                bat 'mvn clean package'
             }
         }
     }
@@ -48,7 +24,3 @@ pipeline {
         }
     }
 }
-
-
- 
- 
