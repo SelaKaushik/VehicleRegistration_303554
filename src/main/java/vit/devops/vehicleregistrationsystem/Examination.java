@@ -20,13 +20,6 @@ public class Examination {
     }
 
     public boolean isEligible() {
-
-        if (age >= 18 && marks >= 40) {
-            System.out.println("Candidate Passed Driving Test");
-            return true;
-        } else {
-            System.out.println("Candidate Failed Driving Test");
-            return false;
-        }
+        return age >= 18 && marks >= 40;
     }
 }
