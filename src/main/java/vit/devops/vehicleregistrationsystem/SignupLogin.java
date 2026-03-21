@@ -22,14 +22,10 @@ public class SignupLogin {
 
     public void signUp() {
         users.put(email, password);
-        System.out.println("User Registered Successfully");
     }
 
-    public static void login(String email, String password) {
-        if (users.containsKey(email) && users.get(email).equals(password)) {
-            System.out.println("Login Successful");
-        } else {
-            System.out.println("Invalid Credentials");
-        }
+    public static boolean login(String email, String password) {
+        return users.containsKey(email) &&
+               users.get(email).equals(password);
     }
 }

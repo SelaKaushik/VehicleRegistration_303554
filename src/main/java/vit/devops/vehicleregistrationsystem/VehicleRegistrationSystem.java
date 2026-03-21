@@ -21,7 +21,7 @@ public class VehicleRegistrationSystem {
             System.out.println("0: Exit");
 
             int x = sc.nextInt();
-            sc.nextLine(); // clear buffer
+            sc.nextLine();
 
             switch (x) {
 
@@ -39,6 +39,8 @@ public class VehicleRegistrationSystem {
 
                     SignupLogin user = new SignupLogin(name, email, password);
                     user.signUp();
+
+                    System.out.println("User Registered Successfully");
                     break;
 
                 case 2:
@@ -50,7 +52,13 @@ public class VehicleRegistrationSystem {
                     System.out.print("Enter Password: ");
                     String loginPassword = sc.nextLine();
 
-                    SignupLogin.login(loginEmail, loginPassword);
+                    boolean loginResult =
+                            SignupLogin.login(loginEmail, loginPassword);
+
+                    if (loginResult)
+                        System.out.println("Login Successful");
+                    else
+                        System.out.println("Invalid Credentials");
                     break;
 
                 case 3:
@@ -62,14 +70,20 @@ public class VehicleRegistrationSystem {
                     System.out.print("Enter Owner Name: ");
                     String owner = sc.nextLine();
 
-                    VehicleRegistration vehicleRegister =
+                    VehicleRegistration vr =
                             new VehicleRegistration(details, owner);
 
-                    vehicleRegister.register();
-                    VehicleRegistration.getDetails(owner);
+                    vr.register();
+                    System.out.println("Vehicle Registered Successfully");
+
+                    String vehicleDetails =
+                            VehicleRegistration.getDetails(owner);
+
+                    if (vehicleDetails != null)
+                        System.out.println("Vehicle Details: " + vehicleDetails);
 
                     VehiclePermit permit = new VehiclePermit(owner);
-                    permit.issuePermit();
+                    System.out.println(permit.issuePermit());
                     break;
 
                 case 4:
@@ -80,15 +94,30 @@ public class VehicleRegistrationSystem {
 
                     System.out.print("Enter Driving Test Marks: ");
                     int marks = sc.nextInt();
-                    sc.nextLine(); // IMPORTANT
+                    sc.nextLine();
 
                     System.out.print("Enter Owner Name: ");
                     String vehicleOwner = sc.nextLine();
 
-                    VehicleRegistration.getDetails(vehicleOwner);
+                    String detailsCheck =
+                            VehicleRegistration.getDetails(vehicleOwner);
+
+                    if (detailsCheck == null) {
+                        System.out.println("No Vehicle Found for " + vehicleOwner);
+                        break;
+                    }
+
+                    System.out.println("Vehicle Details: " + detailsCheck);
 
                     VehicleLicensing vl = new VehicleLicensing();
-                    vl.provideLicense(vehicleOwner, marks, age);
+                    boolean licenseResult =
+                            vl.provideLicense(vehicleOwner, marks, age);
+
+                    if (licenseResult)
+                        System.out.println("Driving License Issued to " + vehicleOwner);
+                    else
+                        System.out.println("Driving License Not Issued to " + vehicleOwner);
+
                     break;
 
                 case 0:
