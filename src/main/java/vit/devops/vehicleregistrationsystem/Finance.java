@@ -15,7 +15,6 @@ public class Finance {
 
     public void collectFee(double amount) {
         totalAmount += amount;
-        System.out.println("Fee Collected: " + amount);
     }
 
     public void showTotal() {
