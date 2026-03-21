@@ -1,7 +1,7 @@
 package vit.devops.tests;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 // Import your main package classes
 import vit.devops.vehicleregistrationsystem.Examination;

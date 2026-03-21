@@ -16,7 +16,7 @@ public class VehiclePermit {
         this.owner = owner;
     }
 
-    public void issuePermit() {
-        System.out.println("Permit Issued to " + owner);
+    public String issuePermit() {
+        return "Permit Issued to " + owner;
     }
 }

@@ -20,14 +20,9 @@ public class VehicleRegistration {
 
     public void register() {
         vehicleDB.put(owner, details);
-        System.out.println("Vehicle Registered Successfully");
     }
 
-    public static void getDetails(String owner) {
-        if (vehicleDB.containsKey(owner)) {
-            System.out.println("Vehicle Details: " + vehicleDB.get(owner));
-        } else {
-            System.out.println("No Vehicle Found for " + owner);
-        }
+    public static String getDetails(String owner) {
+        return vehicleDB.get(owner);
     }
 }
