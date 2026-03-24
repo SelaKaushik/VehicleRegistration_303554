@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         maven 'Maven3'
-        jdk 'JDK25'
+        jdk 'JDK17'
     }
 
     stages {
@@ -13,14 +13,38 @@ pipeline {
                 bat 'mvn clean package'
             }
         }
+
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t vehicle-system:latest .'
+            }
+        }
+
+        stage('Stop Old Container') {
+            steps {
+                bat 'docker rm -f vehicle-container || echo No container found'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                bat 'docker run --name vehicle-container vehicle-system:latest'
+            }
+        }
     }
 
     post {
         success {
-            echo 'Build Successful ✅'
+            echo 'CI/CD Pipeline Executed Successfully'
         }
         failure {
-            echo 'Build Failed ❌'
+            echo 'Pipeline Failed'
         }
     }
 }
