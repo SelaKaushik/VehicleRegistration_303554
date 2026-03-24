@@ -22,19 +22,14 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t vehicle-system:latest .'
-            }
-        }
-
-        stage('Stop Old Container') {
-            steps {
-                bat 'docker rm -f vehicle-container || echo No container found'
+                bat 'docker build -t vehicle-system .'
             }
         }
 
         stage('Run Container') {
             steps {
-                bat 'docker run --name vehicle-container vehicle-system:latest'
+                bat 'docker rm -f vehicle-container || echo No container'
+                bat 'docker run -d --name vehicle-container vehicle-system'
             }
         }
     }
