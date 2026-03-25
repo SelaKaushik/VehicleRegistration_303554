@@ -2,114 +2,92 @@ package vit.devops.tests;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
 import vit.devops.vehicleregistrationsystem.*;
 
-public class VehicleSystemTest {
+public class VehicleSystemTest 
+{
+   
+     @Test
+     void testKaushikLicense() 
+     {
+        Examination exam = new Examination(60, 25);
+        assertTrue(exam.isEligible(), "Kaushik should be eligible for license");
+     }
 
-    //1. Check valid license by age
-    @Test
-    void testValidLicenseByAge() {
-        // Arrange
-        Examination exam = new Examination(50, 20);
 
-        // Act
-        boolean result = exam.isEligible();
+     @Test
+     void testSaiUnderage() 
+     {
+        Examination exam = new Examination(60, 16);
+        assertFalse(exam.isEligible(), "Sai should not be eligible due to age");
+     }
+    
+     @Test
+     void testYashLowMarks() 
+     {
+        Examination exam = new Examination(30, 23);
+        assertFalse(exam.isEligible(), "Yash should fail due to low marks");
+     }
 
-        // Assert
-        assertTrue(result, "License should be valid for age >= 18");
-    }
 
-    //2. Check invalid license by marks
-    @Test
-    void testInvalidLicenseByMarks() {
-        // Arrange
-        Examination exam = new Examination(30, 25);
+     @Test
+     void testKaushikLogin() 
+     {
+       SignupLogin user = new SignupLogin("Kaushik", "kaushik@mail.com", "1234");
+       user.signUp();
 
-        // Act
-        boolean result = exam.isEligible();
+       boolean result = SignupLogin.login("kaushik@mail.com", "1234");
+       assertTrue(result);
+     }
+    
+     @Test
+     void testSaiLoginFail() 
+     {
+       boolean result = SignupLogin.login("sai@mail.com", "wrong");
+       assertFalse(result);
+     }
 
-        // Assert
-        assertFalse(result, "License should fail when marks < 40");
-    }
+     @Test
+     void testYashVehicleRegistration() 
+     {
+       VehicleRegistration vr = new VehicleRegistration("Bike MH12XY5678", "Yash");
+       vr.register();
 
-    //3. Check Login (HashMap)
-    @Test
-    void testLoginSuccess() {
-        // Arrange
-        SignupLogin user =
-                new SignupLogin("Kaushik", "test@mail.com", "1234");
-        user.signUp();
+       String result = VehicleRegistration.getDetails("Yash");
+       assertEquals("Bike MH12XY5678", result);
+     }
 
-        // Act
-        boolean result =
-                SignupLogin.login("test@mail.com", "1234");
+     @Test
+     void testSaiVehicleNotFound() 
+     {
+       String result = VehicleRegistration.getDetails("Sai");
+       assertNull(result);
+     }
 
-        // Assert
-        assertTrue(result, "Login should succeed with correct credentials");
-    }
+     @Test
+     void testKaushikPermit() 
+     {
+       VehiclePermit permit = new VehiclePermit("Kaushik");
+       String result = permit.issuePermit();
 
-    //3b. Invalid Login (extra strong test)
-    @Test
-    void testLoginFailure() {
-        // Act
-        boolean result =
-                SignupLogin.login("wrong@mail.com", "1234");
+       assertEquals("Permit Issued to Kaushik", result);
+     }
 
-        // Assert
-        assertFalse(result, "Login should fail for invalid user");
-    }
+     @Test
+     void testYashLicenseFlow() 
+     {
+       VehicleLicensing vl = new VehicleLicensing();
+       boolean result = vl.provideLicense("Yash", 55, 24);
 
-    //4. Check Vehicle Details
-    @Test
-    void testGetVehicleDetails() {
-        // Arrange
-        VehicleRegistration vr =
-                new VehicleRegistration("Car TN01AB1234", "Kaushik");
-        vr.register();
+       assertTrue(result);
+     }
 
-        // Act
-        String details =
-                VehicleRegistration.getDetails("Kaushik");
+     @Test
+     void testSaiLicenseFail() 
+     {
+       VehicleLicensing vl = new VehicleLicensing();
+       boolean result = vl.provideLicense("Sai", 30, 16);
 
-        // Assert
-        assertEquals("Car TN01AB1234", details);
-    }
-
-    //4b. Vehicle not found
-    @Test
-    void testVehicleNotFound() {
-        // Act
-        String details =
-                VehicleRegistration.getDetails("Unknown");
-
-        // Assert
-        assertNull(details, "Should return null if vehicle not found");
-    }
-
-    //5. Check issuePermit()
-    @Test
-    void testIssuePermit() {
-        // Arrange
-        VehiclePermit permit = new VehiclePermit("Kaushik");
-
-        // Act
-        String result = permit.issuePermit();
-
-        // Assert
-        assertEquals("Permit Issued to Kaushik", result);
-    }
-
-    //Bonus: Full License Flow Test
-    @Test
-    void testProvideLicense() {
-        // Arrange
-        VehicleLicensing vl = new VehicleLicensing();
-
-        // Act
-        boolean result = vl.provideLicense("Kaushik", 50, 22);
-
-        // Assert
-        assertTrue(result, "License should be issued for valid input");
-    }
+       assertFalse(result);
+     }
 }
