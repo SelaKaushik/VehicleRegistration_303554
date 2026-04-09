@@ -16,13 +16,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvn clean package'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                bat 'mvn test'
+                bat 'mvn package'
             }
         }
 
@@ -32,32 +26,12 @@ pipeline {
             }
         }
 
-        stage('Login to DockerHub') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
-                    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
-                }
-            }
-        }
-
         stage('Push Docker Image') {
             steps {
                 bat 'docker push %IMAGE_NAME%'
             }
         }
 
-        stage('Run Container (Local)') {
-            steps {
-                bat 'docker rm -f %CONTAINER_NAME% || echo No container'
-                bat 'docker run -d --name %CONTAINER_NAME% %IMAGE_NAME%'
-            }
-        }
-
-        // OPTIONAL: AUTO DEPLOY TO EC2
         stage('Deploy to EC2') {
             steps {
                 bat """
@@ -69,7 +43,7 @@ pipeline {
 
     post {
         success {
-            echo 'CI/CD Pipeline Executed Successfully'
+            echo 'Fast CI/CD Pipeline Executed'
         }
         failure {
             echo 'Pipeline Failed'
