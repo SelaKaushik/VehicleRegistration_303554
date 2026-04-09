@@ -9,7 +9,7 @@ pipeline {
     environment {
         IMAGE_NAME = 'kaushiksela/vehicle-system'
         CONTAINER_NAME = 'vehicle-container'
-        EC2_HOST = 'ubuntu@ip-172-31-20-227'
+        EC2_HOST = 'ubuntu@13.48.190.76'
     }
 
     stages {
