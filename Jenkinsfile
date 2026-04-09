@@ -6,6 +6,12 @@ pipeline {
         jdk 'JDK25'
     }
 
+    environment {
+        IMAGE_NAME = 'kaushiksela/vehicle-system'
+        CONTAINER_NAME = 'vehicle-container'
+        EC2_HOST = 'ubuntu@ip-172-31-20-227'
+    }
+
     stages {
 
         stage('Build') {
@@ -22,14 +28,41 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t vehicle-system .'
+                bat 'docker build -t %IMAGE_NAME% .'
             }
         }
 
-        stage('Run Container') {
+        stage('Login to DockerHub') {
             steps {
-                bat 'docker rm -f vehicle-container || echo No container'
-                bat 'docker run -d --name vehicle-container vehicle-system'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                bat 'docker push %IMAGE_NAME%'
+            }
+        }
+
+        stage('Run Container (Local)') {
+            steps {
+                bat 'docker rm -f %CONTAINER_NAME% || echo No container'
+                bat 'docker run -d --name %CONTAINER_NAME% %IMAGE_NAME%'
+            }
+        }
+
+        // OPTIONAL: AUTO DEPLOY TO EC2
+        stage('Deploy to EC2') {
+            steps {
+                bat """
+                ssh %EC2_HOST% "docker pull %IMAGE_NAME% && docker rm -f %CONTAINER_NAME% || true && docker run -d --name %CONTAINER_NAME% %IMAGE_NAME%"
+                """
             }
         }
     }
